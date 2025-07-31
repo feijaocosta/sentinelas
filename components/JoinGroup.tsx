@@ -75,7 +75,7 @@ export const JoinGroup: React.FC<JoinGroupProps> = ({
 
   const handleCodeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Remove spaces and convert to uppercase for consistency
-    const value = e.target.value.replace(/\s/g, '').toUpperCase();
+    const value = e.target.value.replace(/\s/g, '');
     setInviteCode(value);
   };
 
