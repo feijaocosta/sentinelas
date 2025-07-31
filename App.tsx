@@ -9,8 +9,7 @@ import { AddEvent } from './components/AddEvent';
 import { GroupsList } from './components/GroupsList';
 import { UserProfile } from './components/UserProfile';
 import { ResetPassword } from './components/ResetPassword';
-
-type View = 'login' | 'groups' | 'group-home' | 'create-group' | 'join-group' | 'add-event' | 'profile' | 'reset-password';
+import type { View } from 'types/view';
 
 function AppContent() {
   const { user, signOut, loading } = useAuth();
@@ -117,13 +116,6 @@ function AppContent() {
         return (
           <UserProfile 
             onBack={() => setCurrentView('groups')}
-          />
-        );
-      case 'reset-password':
-        return (
-          <ResetPassword 
-            onSuccess={() => setCurrentView('login')}
-            onBack={() => setCurrentView('login')}
           />
         );
       default:

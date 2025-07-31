@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { LucideIcon, Menu, X, Users, Plus, LogOut, Link as LinkIcon, User } from 'lucide-react';
 import { Button } from './ui/button';
-
-type View = 'login' | 'groups' | 'group-home' | 'create-group' | 'join-group' | 'add-event' | 'profile';
+import type { View } from 'types/view';
 
 type MenuItem = {
   id: View;
