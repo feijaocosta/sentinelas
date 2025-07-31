@@ -8,7 +8,7 @@ import { Checkbox } from './ui/checkbox';
 import { Alert, AlertDescription } from './ui/alert';
 import { useAuth } from './AuthContext';
 import { X } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { projectId } from '../utils/supabase/info';
 
 interface AddPrayerRequestProps {
   groupId: string;
@@ -72,7 +72,7 @@ export const AddPrayerRequest: React.FC<AddPrayerRequestProps> = ({
 
       onSuccess();
     } catch (err) {
-      setError(err.message || 'Erro ao criar pedido de oração');
+      setError(err instanceof Error ? err.message : 'Erro ao criar pedido de oração');
     } finally {
       setLoading(false);
     }

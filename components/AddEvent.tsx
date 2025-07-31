@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Alert, AlertDescription } from './ui/alert';
 import { useAuth } from './AuthContext';
 import { ArrowLeft, Calendar, MapPin, Clock } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { projectId } from '../utils/supabase/info';
 
 interface AddEventProps {
   group: any;
@@ -69,7 +68,7 @@ export const AddEvent: React.FC<AddEventProps> = ({
 
       onEventAdded();
     } catch (err) {
-      setError(err.message || 'Erro ao criar evento');
+      setError(err instanceof Error ? err.message : 'Erro ao criar pedido de oração');
     } finally {
       setLoading(false);
     }

@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Alert, AlertDescription } from './ui/alert';
 import { useAuth } from './AuthContext';
 import { ArrowLeft, Users, Share2, Copy } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { projectId } from '../utils/supabase/info';
+import { Group } from '../types/group';
 
 interface CreateGroupProps {
   onBack: () => void;
@@ -21,7 +22,7 @@ export const CreateGroup: React.FC<CreateGroupProps> = ({
   const { getAccessToken } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [createdGroup, setCreatedGroup] = useState(null);
+  const [createdGroup, setCreatedGroup] = useState<Group | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -60,7 +61,7 @@ export const CreateGroup: React.FC<CreateGroupProps> = ({
       const data = await response.json();
       setCreatedGroup(data.group);
     } catch (err) {
-      setError(err.message || 'Erro ao criar grupo');
+      setError(err instanceof Error ? err.message : 'Erro ao criar grupo');
     } finally {
       setLoading(false);
     }

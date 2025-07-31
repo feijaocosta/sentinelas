@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from './ui/card';
 import { Badge } from './ui/badge';
 import { useAuth } from './AuthContext';
 import { Heart, User, Clock } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { projectId } from '../utils/supabase/info';
 
 interface PrayerRequestCardProps {
   request: any;
@@ -54,7 +54,7 @@ export const PrayerRequestCard: React.FC<PrayerRequestCardProps> = ({
   };
 
   const getCategoryColor = (category: string) => {
-    const colors = {
+    const colors: { [key: string]: string } = {
       'saude': 'bg-red-100 text-red-800',
       'familia': 'bg-blue-100 text-blue-800',
       'trabalho': 'bg-green-100 text-green-800',

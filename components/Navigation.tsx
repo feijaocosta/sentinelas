@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { Menu, X, Users, Home, Plus, LogOut, Link as LinkIcon } from 'lucide-react';
+import { LucideIcon, Menu, X, Users, Plus, LogOut, Link as LinkIcon } from 'lucide-react';
 import { Button } from './ui/button';
 
+type View = 'login' | 'groups' | 'group-home' | 'create-group' | 'join-group' | 'add-event';
+
+type MenuItem = {
+  id: View;
+  label: string;
+  icon: LucideIcon;
+};
 
 interface NavigationProps {
   currentView: string;
   onSignOut: () => void;
-  onNavigate: (view: string) => void;
+  onNavigate: (view: View) => void;
   selectedGroup: any;
 }
 
@@ -18,7 +25,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { id: 'groups', label: 'Meus Grupos', icon: Users },
     { id: 'create-group', label: 'Criar Grupo', icon: Plus },
     { id: 'join-group', label: 'Entrar no Grupo', icon: LinkIcon },

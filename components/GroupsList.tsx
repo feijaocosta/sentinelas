@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Alert, AlertDescription } from './ui/alert';
 import { useAuth } from './AuthContext';
 import { Users, Plus, Link as LinkIcon, Calendar, MessageCircle, ArrowRight } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { projectId } from '../utils/supabase/info';
+import { Group } from 'types/group';
 
 interface GroupsListProps {
   onGroupSelect: (group: any) => void;
@@ -18,7 +19,7 @@ export const GroupsList: React.FC<GroupsListProps> = ({
   onJoinGroup,
 }) => {
   const { getAccessToken } = useAuth();
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 

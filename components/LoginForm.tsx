@@ -5,7 +5,6 @@ import { Label } from './ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Alert, AlertDescription } from './ui/alert';
-import { Separator } from './ui/separator';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useAuth } from './AuthContext';
 import { Users, Mail, Lock, User, KeyRound, CheckCircle2 } from 'lucide-react';
@@ -15,9 +14,9 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const { signIn, signUp, signInWithProvider, resetPassword } = useAuth();
+  const { signIn, signUp, resetPassword } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<string | null>(null);
+  const [socialLoading] = useState<string | null>(null);
   const [resetLoading, setResetLoading] = useState(false);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('login');
@@ -45,7 +44,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     setError('');
 
     try {
-      const { data, error } = await signIn(loginData.email, loginData.password);
+      const { error } = await signIn(loginData.email, loginData.password);
       
       if (error) {
         setError(error.message || 'Erro ao fazer login');
@@ -77,7 +76,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     }
 
     try {
-      const { data, error } = await signUp(
+      const { error } = await signUp(
         signupData.email, 
         signupData.password, 
         signupData.name
@@ -95,12 +94,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     }
   };
 
+  /* social login not included in this version
   const handleSocialLogin = async (provider: 'google' | 'facebook' | 'apple') => {
     setSocialLoading(provider);
     setError('');
 
     try {
-      const { data, error } = await signInWithProvider(provider);
+      const { error } = await signInWithProvider(provider);
       
       if (error) {
         setError(`Erro ao fazer login com ${provider}`);
@@ -112,13 +112,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       setSocialLoading(null);
     }
   };
-
+*/
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setResetLoading(true);
 
     try {
-      const { data, error } = await resetPassword(resetEmail);
+      const { error } = await resetPassword(resetEmail);
       
       if (error) {
         setError(error.message || 'Erro ao enviar email de recuperação');
@@ -139,7 +139,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     setResetSuccess(false);
     setError('');
   };
-
+/* social login buttons not included in this version
   const SocialButton = ({ provider, icon, label, color }: {
     provider: 'google' | 'facebook' | 'apple';
     icon: React.ReactNode;
@@ -165,7 +165,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       </Button>
     );
   };
-
+*/
   return (
     <div className="min-h-[calc(100vh-2rem)] flex items-center justify-center p-4">
       <div className="w-full max-w-md">

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Alert, AlertDescription } from './ui/alert';
-import { Badge } from './ui/badge';
 import { PrayerRequestCard } from './PrayerRequestCard';
 import { EventCard } from './EventCard';
 import { AddPrayerRequest } from './AddPrayerRequest';
@@ -13,11 +12,13 @@ import {
   Plus, 
   MessageCircle, 
   Calendar, 
-  Users, 
   Share2,
   Copy
 } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { projectId } from '../utils/supabase/info';
+import { Group } from 'types/group';
+import { PrayerRequest } from 'types/prayerRequest';
+import { Event } from 'types/event';
 
 interface GroupHomeProps {
   group: any;
@@ -31,9 +32,9 @@ export const GroupHome: React.FC<GroupHomeProps> = ({
   onAddEvent,
 }) => {
   const { getAccessToken } = useAuth();
-  const [groupData, setGroupData] = useState(null);
-  const [prayerRequests, setPrayerRequests] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [groupData, setGroupData] = useState<Group | null>(null);
+  const [prayerRequests, setPrayerRequests] = useState<PrayerRequest[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showAddPrayer, setShowAddPrayer] = useState(false);

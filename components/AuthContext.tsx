@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, User, Session } from '@supabase/supabase-js';
 import { projectId, publicAnonKey } from '../utils/supabase/info';
 
 const supabase = createClient(`https://${projectId}.supabase.co`, publicAnonKey);
 
 interface AuthContextType {
-  user: any;
-  session: any;
+  user: User | null;
+  session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<any>;
   signUp: (email: string, password: string, name: string) => Promise<any>;
@@ -27,8 +27,8 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [session, setSession] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -115,8 +115,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const errorData = await response.json();
         return { data: null, error: errorData };
       }
-
-      const data = await response.json();
       
       // Sign in the user after successful signup
       const signInResult = await signIn(email, password);

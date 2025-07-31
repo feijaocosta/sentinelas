@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Alert, AlertDescription } from './ui/alert';
 import { useAuth } from './AuthContext';
 import { ArrowLeft, Users, Link as LinkIcon } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { projectId } from '../utils/supabase/info';
 
 interface JoinGroupProps {
   onBack: () => void;
@@ -60,12 +60,13 @@ export const JoinGroup: React.FC<JoinGroupProps> = ({
         onGroupJoined(data.group);
       }, 1500);
     } catch (err) {
-      if (err.message.includes('Already a member')) {
+      let message = err instanceof Error ? err.message : 'Erro ao entrar no grupo'
+      if (message.includes('Already a member')) {
         setError('Você já é membro deste grupo');
-      } else if (err.message.includes('Invalid invite code')) {
+      } else if (message.includes('Invalid invite code')) {
         setError('Código de convite inválido ou expirado');
       } else {
-        setError(err.message || 'Erro ao entrar no grupo');
+        setError(message);
       }
     } finally {
       setLoading(false);
