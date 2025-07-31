@@ -17,7 +17,7 @@ interface UserData {
 }
 
 export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
-  const { user, session, getAccessToken } = useAuth();
+  const { user, getAccessToken } = useAuth();
   const [userData, setUserData] = useState<UserData>({ name: '', email: '' });
   const [passwords, setPasswords] = useState({
     current: '',
