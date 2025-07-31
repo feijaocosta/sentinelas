@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './components/AuthContext';
 import { Navigation } from './components/Navigation';
 import { LoginForm } from './components/LoginForm';
@@ -7,13 +7,25 @@ import { CreateGroup } from './components/CreateGroup';
 import { JoinGroup } from './components/JoinGroup';
 import { AddEvent } from './components/AddEvent';
 import { GroupsList } from './components/GroupsList';
+import { UserProfile } from './components/UserProfile';
+import { ResetPassword } from './components/ResetPassword';
 
-type View = 'login' | 'groups' | 'group-home' | 'create-group' | 'join-group' | 'add-event';
+type View = 'login' | 'groups' | 'group-home' | 'create-group' | 'join-group' | 'add-event' | 'profile' | 'reset-password';
 
 function AppContent() {
   const { user, signOut, loading } = useAuth();
   const [currentView, setCurrentView] = useState<View>('groups');
   const [selectedGroup, setSelectedGroup] = useState(null);
+
+  // Verificar se é uma página de reset de senha
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    
+    if (type === 'recovery') {
+      setCurrentView('reset-password');
+    }
+  }, []);
 
   // Show loading while auth is being determined
   if (loading) {
@@ -27,13 +39,25 @@ function AppContent() {
     );
   }
 
-  // Show login if no user
-  if (!user) {
+  // Show login if no user (except for reset password)
+  if (!user && currentView !== 'reset-password') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <main className="container mx-auto px-4 py-6 max-w-4xl">
           <LoginForm onLogin={() => setCurrentView('groups')} />
         </main>
+      </div>
+    );
+  }
+
+  // Show reset password without navigation
+  if (currentView === 'reset-password') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <ResetPassword 
+          onSuccess={() => setCurrentView('login')}
+          onBack={() => setCurrentView('login')}
+        />
       </div>
     );
   }
@@ -87,6 +111,19 @@ function AppContent() {
             group={selectedGroup}
             onBack={() => setCurrentView('group-home')}
             onEventAdded={() => setCurrentView('group-home')}
+          />
+        );
+      case 'profile':
+        return (
+          <UserProfile 
+            onBack={() => setCurrentView('groups')}
+          />
+        );
+      case 'reset-password':
+        return (
+          <ResetPassword 
+            onSuccess={() => setCurrentView('login')}
+            onBack={() => setCurrentView('login')}
           />
         );
       default:

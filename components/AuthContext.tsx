@@ -118,6 +118,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       // Sign in the user after successful signup
       const signInResult = await signIn(email, password);
+      
+      // Ensure user profile is created with the provided name
+      if (signInResult.data?.user && !signInResult.error) {
+        await ensureUserInBackend({
+          ...signInResult.data.user,
+          user_metadata: {
+            ...signInResult.data.user.user_metadata,
+            full_name: name,
+            name: name
+          }
+        });
+      }
+      
       return signInResult;
     } catch (error) {
       return { data: null, error: { message: 'Failed to sign up' } };

@@ -403,34 +403,5 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                         type="password"
                         placeholder="Confirme sua senha"
                         value={signupData.confirmPassword}
-                        onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                    disabled={loading || socialLoading !== null}
-                  >
-                    {loading ? 'Criando conta...' : 'Criar Conta'}
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
-
-            {/* Privacy Notice */}
-            <div className="text-center">
-              <p className="text-xs text-gray-500">
-                Ao continuar, você concorda com nossos termos de uso e política de privacidade.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-      </div>
-    </div>
-  );
-};
+                        onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.valu
+(Content truncated due to size limit. Use line ranges to read in chunks)

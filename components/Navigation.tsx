@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { LucideIcon, Menu, X, Users, Plus, LogOut, Link as LinkIcon } from 'lucide-react';
+import { LucideIcon, Menu, X, Users, Plus, LogOut, Link as LinkIcon, User } from 'lucide-react';
 import { Button } from './ui/button';
 
-type View = 'login' | 'groups' | 'group-home' | 'create-group' | 'join-group' | 'add-event';
+type View = 'login' | 'groups' | 'group-home' | 'create-group' | 'join-group' | 'add-event' | 'profile';
 
 type MenuItem = {
   id: View;
@@ -29,6 +29,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { id: 'groups', label: 'Meus Grupos', icon: Users },
     { id: 'create-group', label: 'Criar Grupo', icon: Plus },
     { id: 'join-group', label: 'Entrar no Grupo', icon: LinkIcon },
+    { id: 'profile', label: 'Meu Perfil', icon: User },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
